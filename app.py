@@ -157,7 +157,7 @@ if st.button("🚀 Match Resumes"):
             final_score = (
                 0.4 * semantic_score +
                 0.2 * skill_match +
-                0.2 * experience_score +
+                0.1 * experience_score +
                 0.2 * education_score
             )
 
@@ -182,7 +182,7 @@ if st.button("🚀 Match Resumes"):
 
         for rank, (name, score) in enumerate(ranking, start=1):
 
-            if score >= 0.70:
+            if score >= 0.75:
                 decision = "✅ Hire Candidate"
             elif score >= 0.45:
                 decision = "💡 Shortlist"
@@ -247,4 +247,5 @@ if st.button("🚀 Match Resumes"):
         )
 
     else:
+
         st.warning("⚠️ Please upload resumes and enter job description.")
