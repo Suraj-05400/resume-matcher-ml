@@ -1,19 +1,17 @@
-import nltk
-
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
-    nltk.download('punkt')
-
 import docx2txt
 from pdfminer.high_level import extract_text
 import re
-from nltk.corpus import stopwords
 
-STOP_WORDS = set(stopwords.words('english'))
+#---Show Skills list---
+skills = [
+    "python","machine learning","deep learning","nlp","sql","power bi",
+    "tableau","excel","data science","statistics","tensorflow","pytorch",
+    "java","c++","aws","azure","gcp","docker","kubernetes","flask","django"
+]
 
+#---extract resume Text---
 def extract_resume(file):
+
     text = ""
 
     if file.name.endswith(".pdf"):
@@ -24,38 +22,37 @@ def extract_resume(file):
 
     return text
 
-
+#---Text Cleaning---
 def clean_text(text):
+
     text = re.sub(r'[^a-zA-Z ]', '', text)
+
     text = text.lower()
-    words = text.split()
-    words = [word for word in words if word not in STOP_WORDS]
-    return " ".join(words)
 
+    return text
 
+#---Detecting Skills---
 def detect_skills(text):
-
-    skills = [
-        "python","machine learning","deep learning","nlp","sql","power bi",
-        "tableau","excel","data science","statistics","tensorflow","pytorch",
-        "java","c++","aws","azure","gcp","docker","kubernetes","flask","django"
-    ]
 
     found_skills = []
 
     for skill in skills:
+
         if skill in text:
             found_skills.append(skill)
 
     return found_skills
 
-
+#---Extract Experience---
 def extract_experience(text):
+
     matches = re.findall(r'(\d+)\+?\s*years?', text.lower())
+
     years = [int(m) for m in matches]
+
     return max(years) if years else 0
 
-
+#---Extract Education---
 def extract_education(text):
 
     degrees = {
@@ -72,9 +69,11 @@ def extract_education(text):
     }
 
     text = text.lower()
+
     highest = 0
 
     for degree, score in degrees.items():
+
         if degree in text:
             highest = max(highest, score)
 
