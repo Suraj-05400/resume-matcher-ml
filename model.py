@@ -1,22 +1,16 @@
-from sentence_transformers import SentenceTransformer, util
-import streamlit as st
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-# Cache the model so it loads only once
-@st.cache_resource
-def load_model():
-    return SentenceTransformer('all-MiniLM-L6-v2')
 
-model = load_model()
+def match_resumes(resumes, job_description):
 
-def match_resumes(resume_texts, job_description):
+    documents = [job_description] + resumes
 
-    job_embedding = model.encode(job_description, convert_to_tensor=True)
+    vectorizer = TfidfVectorizer()
+    tfidf = vectorizer.fit_transform(documents)
 
-    scores = []
+    similarity = cosine_similarity(tfidf[1:], tfidf[0])
 
-    for resume in resume_texts:
-        resume_embedding = model.encode(resume, convert_to_tensor=True)
-        similarity = util.cos_sim(resume_embedding, job_embedding)
-        scores.append(float(similarity[0][0]))
+    scores = [float(score[0]) for score in similarity]
 
     return scores
