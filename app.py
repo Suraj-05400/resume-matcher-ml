@@ -18,8 +18,7 @@ def load_lottie(url):
     except:
         return None
 
-lottie_ai = load_lottie("https://assets10.lottiefiles.com/packages/lf20_qp1q7mct.json")
-
+lottie_ai = load_lottie("https://assets10.lottiefiles.com/packages/lf20_kyu7xb1v.json")
 #---Custom UI---
 st.markdown("""
 <style>
