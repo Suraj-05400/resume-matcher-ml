@@ -2,14 +2,48 @@ import docx2txt
 from pdfminer.high_level import extract_text
 import re
 
-#---Show Skills list---
+# ---------- SKILLS LIST ----------
 skills = [
-    "python","machine learning","deep learning","nlp","sql","power bi",
-    "tableau","excel","data science","statistics","tensorflow","pytorch",
-    "java","c++","aws","azure","gcp","docker","kubernetes","flask","django"
+
+    # Programming Languages
+    "python","java","c","c++","c#","javascript","typescript","go","ruby","php","r","matlab",
+
+    # Data Science & ML
+    "machine learning","ml","deep learning","dl","data science","data analysis",
+    "statistics","predictive modeling","regression","classification","clustering",
+
+    # AI & NLP
+    "artificial intelligence","ai","nlp","natural language processing",
+    "computer vision","image processing","text mining",
+
+    # Libraries & Frameworks
+    "tensorflow","pytorch","keras","scikit-learn","sklearn","pandas","numpy","matplotlib","seaborn",
+
+    # Databases
+    "sql","mysql","postgresql","mongodb","oracle","sqlite","nosql",
+
+    # Data Visualization
+    "power bi","tableau","excel","data visualization","dashboard",
+
+    # Web Development
+    "html","css","javascript","react","angular","vue","nodejs","express",
+    "flask","django","spring boot",
+
+    # Cloud & DevOps
+    "aws","amazon web services","azure","gcp","google cloud",
+    "docker","kubernetes","ci/cd","jenkins","git","github",
+
+    # Big Data
+    "hadoop","spark","big data","kafka","hive",
+
+    # Tools
+    "linux","unix","shell scripting","jira","postman",
+
+    # Soft Skills
+    "communication","teamwork","problem solving","leadership"
 ]
 
-#---extract resume Text---
+# ---------- EXTRACT RESUME ----------
 def extract_resume(file):
 
     text = ""
@@ -22,37 +56,39 @@ def extract_resume(file):
 
     return text
 
-#---Text Cleaning---
+
+# ---------- CLEAN TEXT ----------
 def clean_text(text):
 
-    text = re.sub(r'[^a-zA-Z ]', '', text)
-
+    text = re.sub(r'[^a-zA-Z ]', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
     text = text.lower()
 
     return text
 
-#---Detecting Skills---
+
+# ---------- DETECT SKILLS ----------
 def detect_skills(text):
 
+    text = text.lower()
     found_skills = []
 
     for skill in skills:
-
-        if skill in text:
+        if skill.lower() in text:
             found_skills.append(skill)
 
-    return found_skills
+    return list(set(found_skills))
 
-#---Extract Experience---
+# ---------- EXPERIENCE ----------
 def extract_experience(text):
 
     matches = re.findall(r'(\d+)\+?\s*years?', text.lower())
-
     years = [int(m) for m in matches]
 
     return max(years) if years else 0
 
-#---Extract Education---
+
+# ---------- EDUCATION ----------
 def extract_education(text):
 
     degrees = {
@@ -68,13 +104,10 @@ def extract_education(text):
         "diploma": 1
     }
 
-    text = text.lower()
-
     highest = 0
 
     for degree, score in degrees.items():
-
-        if degree in text:
+        if degree in text.lower():
             highest = max(highest, score)
 
     return highest
