@@ -19,6 +19,7 @@ def load_lottie(url):
         return None
 
 lottie_ai = load_lottie("https://assets10.lottiefiles.com/packages/lf20_kyu7xb1v.json")
+
 #---Custom UI---
 st.markdown("""
 <style>
@@ -136,11 +137,15 @@ if st.button("🚀 Match Resumes"):
             candidate_skills = resume_skills[i]
             semantic_score = sim_score
 
+            # 🔥 FIX (case-insensitive comparison)
+            candidate_skills_set = set([s.lower() for s in candidate_skills])
+            job_skills_set = set([s.lower() for s in job_skills])
+
             if job_skills:
-                matched = set(candidate_skills) & set(job_skills)
+                matched = candidate_skills_set & job_skills_set
                 skill_match = len(matched) / len(job_skills)
                 skill_percent = round(skill_match * 100, 2)
-                missing = list(set(job_skills) - set(candidate_skills))
+                missing = list(job_skills_set - candidate_skills_set)
             else:
                 skill_match = 0
                 skill_percent = 0
@@ -181,7 +186,6 @@ if st.button("🚀 Match Resumes"):
         col2.metric("🏆 Top Match Score", f"{round(max(final_scores)*100,2)}%")
         col3.metric("📈 Average Match", f"{round(sum(final_scores)/len(final_scores)*100,2)}%")
 
-        #---Showing Best Candidate---
         best_index = final_scores.index(max(final_scores))
 
         st.success(
@@ -191,7 +195,7 @@ if st.button("🚀 Match Resumes"):
 
         st.markdown("---")
 
-        #---Show Ranking---
+        #---Ranking---
         st.subheader("🎖️ Candidate Ranking")
 
         ranking = sorted(zip(resume_names, final_scores), key=lambda x: x[1], reverse=True)
@@ -219,7 +223,7 @@ if st.button("🚀 Match Resumes"):
 
         st.markdown("---")
 
-        #---Show Skills---
+        #---Skills---
         st.subheader("🔎 Detected Skills")
 
         for name, skills in zip(resume_names, resume_skills):
@@ -227,7 +231,7 @@ if st.button("🚀 Match Resumes"):
 
         st.markdown("---")
 
-        #---Show Pie Chart---
+        #---Pie Chart---
         st.subheader("📊 Resume Match Distribution")
 
         labels = resume_names
@@ -240,7 +244,7 @@ if st.button("🚀 Match Resumes"):
 
         st.markdown("---")
 
-        #---Dashboard Board---
+        #---Download---
         st.subheader("⬇ Download Hiring Report")
 
         df = pd.DataFrame({
