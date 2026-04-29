@@ -148,7 +148,6 @@ if not st.session_state.logged_in and st.session_state.show_landing:
     <div class="hero">
         <h1>🤖 AI Resume Matcher</h1>
         <p>Smart Hiring with AI for HR Professionals</p>
-        <p>Automate Resume Screening & Job Recommendation Systems</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -225,7 +224,7 @@ if not st.session_state.logged_in:
         password = st.text_input("Password", type="password", key="reg_pass")
         confirm_password = st.text_input("Confirm Password", type="password", key="confirm_pass")
 
-        role = st.selectbox("Select Role", ["HR", "Job Seeker"], key="reg_role")
+        role = st.selectbox("Select Role", ["HR"], key="reg_role")
 
         if st.button("Register", key="register_btn", use_container_width=True):
 
@@ -277,6 +276,7 @@ else:
         st_lottie(lottie_ai, height=220)
 
     #------------------------this is the Job seeker dashboard----------------------------------
+    """
     if role == "Job Seeker":
 
         st.sidebar.subheader("📂 Job Seeker Dashboard")
@@ -340,7 +340,7 @@ else:
 
             else:
                 st.warning("Upload resume and enter job description")
-            
+"""            
     #---Side Bar------------------this is the HR dashboard-------------------------------------
     elif role == "HR":
         st.sidebar.subheader("📂 HR Control")
