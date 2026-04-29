@@ -275,73 +275,7 @@ else:
     if lottie_ai:
         st_lottie(lottie_ai, height=220)
 
-    #------------------------this is the Job seeker dashboard----------------------------------
-    """
-    if role == "Job Seeker":
-
-        st.sidebar.subheader("📂 Job Seeker Dashboard")
-        st.sidebar.markdown("📌 Instructions")
-        st.sidebar.write("1️. Upload your resume")
-        st.sidebar.write("2️. Paste job description")
-        st.sidebar.write("3️. Click Analyze Resume")
-
-        resume = st.file_uploader("Upload Resume", type=["pdf", "docx"])
-        jd = st.text_area("Paste Job Description")
-
-        if st.button("Analyze Resume", key="jobseeker_btn"):
-
-            if resume and jd:
-
-                text = extract_resume(resume)
-                cleaned = clean_text(text)
-
-                skills = detect_skills(cleaned)
-
-                cleaned_jd = clean_text(jd)
-                jd_skills = detect_skills(cleaned_jd)
-
-                skills_set = set([s.lower() for s in skills])
-                jd_set = set([s.lower() for s in jd_skills])
-
-                matched = list(skills_set & jd_set)
-                missing = list(jd_set - skills_set)
-
-                if jd_skills:
-                    ats = int((len(matched) / len(jd_skills)) * 100)
-                else:
-                    ats = 0
-
-                st.metric("📊 ATS Score", f"{ats}%")
-
-                st.write("✅ Matched Skills:", matched)
-                st.write("❌ Missing Skills:", missing)
-
-                st.subheader("💡 Suggestions")
-                st.write("- Add missing skills")
-                st.write("- Add projects")
-                st.write("- Add certifications")
-                st.write("- Tailor resume for each job")
-
-                # Job Recommendation
-                if ats < 60:
-                    st.subheader("🔍 Recommended Jobs")
-
-                    jobs = {
-                        "Data Analyst": ["python", "sql", "excel", "tableau", "power bi"],
-                        "Frontend Developer": ["react", "html","css", "javascript", "vue","angular"],
-                        "Backend Developer": ["python", "django","flask","java", "spring", "nodejs","express", "sql", "mongodb","aws"],
-                        "Data Scientist": ["python", "r", "machine learning", "deep learning", "nlp", "statistics", "sql"],
-                        "Project Manager": ["project management", "agile", "scrum", "communication", "leadership"],
-                    }
-
-                    for job, req in jobs.items():
-                        if len(set(req) & skills_set) > 0:
-                            st.write("👉", job)
-
-            else:
-                st.warning("Upload resume and enter job description")
-"""            
-    #---Side Bar------------------this is the HR dashboard-------------------------------------
+        #---Side Bar------------------this is the HR dashboard-------------------------------------
     if role == "HR":
         st.sidebar.subheader("📂 HR Control")
 
