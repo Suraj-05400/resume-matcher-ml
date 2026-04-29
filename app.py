@@ -342,7 +342,7 @@ else:
                 st.warning("Upload resume and enter job description")
 """            
     #---Side Bar------------------this is the HR dashboard-------------------------------------
-    elif role == "HR":
+    if role == "HR":
         st.sidebar.subheader("📂 HR Control")
 
         uploaded_files = st.sidebar.file_uploader(   #Important Fix: add at.sidebar if you want upload button to be palced at sidebar
